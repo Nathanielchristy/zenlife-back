@@ -24,5 +24,7 @@ jobs:
     steps:
       - name: Pull imagefrom docker
         run: docker pull natztheking/zenlife-nodejs-app:latest
+      - name: Delete old container
+        run: docker rm -f nodejs-app-container
       - name: Run Docker Container
         run: docker run -d -p 5000:5000 --name nodejs-app-container -e MONGO_URI=`${{secrets.MONGO_URI}}` -e NODE_ENV=`${{secrets.NODE_ENV}}` -e JWT_SECRET=`${{secrets.JWT_SECRET}}` natztheking/zenlife-nodejs-app:latest
