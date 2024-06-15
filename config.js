@@ -3,6 +3,7 @@ module.exports = {
   mongoURI: process.env.MONGO_URI, // MongoDB connection URI
   allowedOrigins: [
     "http://localhost:5174",
+    "http://localhost:5173",
     "http://3.29.133.152:4173",
     "http://localhost:4173",
     "http://192.168.0.113:5174",
