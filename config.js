@@ -2,6 +2,7 @@ module.exports = {
   port: process.env.PORT || 5000, // Server port
   mongoURI: process.env.MONGO_URI, // MongoDB connection URI
   allowedOrigins: [
+    "http://3.29.236.11:4173",
     "http://localhost:5174",
     "http://localhost:5173",
     "http://3.29.133.152:4173",
