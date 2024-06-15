@@ -160,8 +160,13 @@ const getUser = asyncHandler(async (req, res) => {
 // Check login
 
 const loginStatus = asyncHandler(async (req, res) => {
-  const token = req.cookies.token;
-  // console.log(token);
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.json({ isLoggedIn: false });
+  }
+
+  const token = authHeader.split(" ")[1];
 
   if (!token) {
     return res.json({ isLoggedIn: false });
