@@ -175,6 +175,13 @@ const loginStatus = asyncHandler(async (req, res) => {
   try {
     // Verify token
     jwt.verify(token, process.env.JWT_SECRET);
+    res.cookie("token", token, {
+      path: "/",
+      httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 86400), //1 day
+      sameSite: "none",
+      secure: true,
+    });
     return res.json({ isLoggedIn: true });
   } catch (error) {
     if (error.name === "TokenExpiredError") {
