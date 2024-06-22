@@ -13,6 +13,7 @@ const jobSchema = new mongoose.Schema({
   jobcardnumber: {
     type: Number,
     unique: true, // Ensures uniqueness of job card numbers
+    index: true,
   },
   clientname: {
     type: String,
@@ -80,12 +81,11 @@ jobSchema.pre("save", async function (next) {
       return next();
     }
 
-    const doc = await Sequence.findByIdAndUpdate(
-      { _id: "job_card_number" },
-      { $inc: { seq: 1 } },
-      { new: true, upsert: true }
-    );
-    this.jobcardnumber = doc.seq;
+    const lastJob = await this.constructor
+      .findOne()
+      .sort({ jobcardnumber: -1 });
+    this.jobcardnumber = lastJob ? lastJob.jobcardnumber + 1 : 1;
+
     next();
   } catch (error) {
     next(error);
