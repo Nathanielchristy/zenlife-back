@@ -90,12 +90,10 @@ const deleteJob = asyncHandler(async (req, res) => {
   const jobs = await Job.find().sort({ jobCardNumber: 1 });
 
   // Update the job card numbers to ensure they are sequential
-  await Promise.all(
-    jobs.map((job, index) => {
-      job.jobCardNumber = index + 1; // Setting job card numbers sequentially
-      return job.save(); // Save the updated job
-    })
-  );
+  for (let i = 0; i < jobs.length; i++) {
+    jobs[i].jobCardNumber = i + 1; // Setting job card numbers sequentially
+    await jobs[i].save(); // Save the updated job
+  }
 
   // Emit the jobDeleted event
   req.io.emit("jobDeleted", deletedJob);
