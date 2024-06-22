@@ -79,11 +79,28 @@ const editJob = asyncHandler(async (req, res) => {
 
 const deleteJob = asyncHandler(async (req, res) => {
   const { id } = req.params;
+
+  // Delete the specified job
   const deletedJob = await Job.findByIdAndDelete(id);
   if (!deletedJob) {
     return res.status(404).json({ error: "Job not found" });
   }
+
+  // Retrieve all remaining jobs sorted by their current job card number
+  const jobs = await Job.find().sort({ jobCardNumber: 1 });
+
+  // Update the job card numbers to ensure they are sequential
+  await Promise.all(
+    jobs.map((job, index) => {
+      job.jobCardNumber = index + 1; // Setting job card numbers sequentially
+      return job.save(); // Save the updated job
+    })
+  );
+
+  // Emit the jobDeleted event
   req.io.emit("jobDeleted", deletedJob);
+
+  // Respond with a success message
   res.json({ message: "Job deleted successfully" });
 });
 
