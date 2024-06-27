@@ -71,7 +71,7 @@ const jobSchema = new mongoose.Schema({
     type: String,
     default: "admin",
   },
-  editedsBy: {
+  editedBy: {
     type: String,
     default: "admin",
   },
