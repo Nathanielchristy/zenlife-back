@@ -71,6 +71,10 @@ const jobSchema = new mongoose.Schema({
     type: String,
     default: "admin",
   },
+  editedsBy: {
+    type: String,
+    default: "admin",
+  },
 });
 
 // Increment job card number before saving the Job document
