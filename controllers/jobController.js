@@ -63,7 +63,7 @@ const viewJob = asyncHandler(async (req, res) => {
 
 const addJob = asyncHandler(async (req, res) => {
   const newJob = await Job.create(req.body);
-  req.io.emit("jobAdded", newJob);
+  // req.io.emit("jobAdded", newJob);
   res.status(201).json(newJob);
 });
 
@@ -73,7 +73,7 @@ const editJob = asyncHandler(async (req, res) => {
   if (!updatedJob) {
     return res.status(404).json({ error: "Job not found" });
   }
-  req.io.emit("jobUpdated", updatedJob);
+  // req.io.emit("jobUpdated", updatedJob);
   res.json(updatedJob);
 });
 
