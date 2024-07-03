@@ -59,6 +59,14 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  additionalinfo: {
+    type: String,
+    required: false,
+  },
+  reprintinfo: {
+    type: String,
+    required: false,
+  },
   jobstatus: {
     type: String,
     required: false,
