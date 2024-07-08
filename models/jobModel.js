@@ -24,7 +24,7 @@ const jobSchema = new mongoose.Schema({
     required: true,
   },
   invoiceno: {
-    type: Number,
+    type: String,
     required: false,
   },
   salescoordinator: {
