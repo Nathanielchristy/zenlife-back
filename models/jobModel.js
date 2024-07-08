@@ -71,6 +71,22 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  statusHistory: [
+    {
+      jobstatus: {
+        type: String,
+        required: false,
+      },
+      editedBy: {
+        type: String,
+        required: false,
+      },
+      updatedAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now, // Sets the default value to the current date and time

@@ -62,18 +62,48 @@ const viewJob = asyncHandler(async (req, res) => {
 });
 
 const addJob = asyncHandler(async (req, res) => {
-  const newJob = await Job.create(req.body);
-  // req.io.emit("jobAdded", newJob);
+  const { jobstatus, editedBy } = req.body;
+  const newJob = await Job.create({
+    ...req.body,
+    statusHistory: [
+      {
+        jobstatus,
+        editedBy,
+        updatedAt: new Date(),
+      },
+    ],
+  });
   res.status(201).json(newJob);
 });
 
 const editJob = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const updatedJob = await Job.findByIdAndUpdate(id, req.body, { new: true });
-  if (!updatedJob) {
+  const { jobstatus, editedBy, ...updateData } = req.body;
+
+  // Find the job by ID
+  const job = await Job.findById(id);
+  if (!job) {
     return res.status(404).json({ error: "Job not found" });
   }
+
+  // Update the current job status and append to status history if status is provided
+  if (jobstatus) {
+    job.statusHistory.push({
+      jobstatus,
+      editedBy,
+      updatedAt: new Date(),
+    });
+  }
+
+  // Update other job fields
+  Object.assign(job, updateData);
+
+  // Save the updated job
+  const updatedJob = await job.save();
+
+  // Emit an event if needed
   // req.io.emit("jobUpdated", updatedJob);
+
   res.json(updatedJob);
 });
 
