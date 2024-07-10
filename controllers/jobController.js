@@ -88,11 +88,20 @@ const editJob = asyncHandler(async (req, res) => {
 
   // Update the current job status and append to status history if status is provided
   if (jobstatus) {
-    job.statusHistory.push({
-      jobstatus,
-      editedBy,
-      updatedAt: new Date(),
-    });
+    const statusIndex = job.statusHistory.findIndex(
+      (status) => status.jobstatus === jobstatus
+    );
+
+    if (statusIndex !== -1) {
+      job.statusHistory[statusIndex].editedBy = editedBy;
+      job.statusHistory[statusIndex].updatedAt = new Date();
+    } else {
+      job.statusHistory.push({
+        jobstatus,
+        editedBy,
+        updatedAt: new Date(),
+      });
+    }
   }
 
   // Update other job fields
