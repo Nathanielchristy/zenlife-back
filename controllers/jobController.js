@@ -88,6 +88,7 @@ const editJob = asyncHandler(async (req, res) => {
 
   // Update the current job status and append to status history if status is provided
   if (jobstatus) {
+    job.jobstatus = jobstatus;
     const statusIndex = job.statusHistory.findIndex(
       (status) => status.jobstatus === jobstatus
     );
