@@ -9,6 +9,7 @@ module.exports = {
     "http://localhost:4173",
     "http://192.168.0.113:5174",
     "http://172.26.16.1:5174",
+    "https://zenlife-front.vercel.app",
     "http://192.168.56.1:5174", // replace with your local IP address
   ],
   // Add any other configuration options here (e.g., secret keys)
