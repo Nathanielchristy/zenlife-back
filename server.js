@@ -76,6 +76,10 @@ app.use("/api/dashboard", jobRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/jobstatus", jobStatusRoutes);
 
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok", message: "Server is alive 🚀" });
+});
+
 // Error Middleware
 app.use(errorHandler);
 
